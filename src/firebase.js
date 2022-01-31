@@ -1,13 +1,14 @@
 import firebase from 'firebase';
-
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
-  apiKey: 'AIzaSyB-vqZaaQiNBycgqm-dycu6fOyhzSgv_jw',
-  authDomain: 'spam-cb3f4.firebaseapp.com',
-  projectId: 'spam-cb3f4',
-  storageBucket: 'spam-cb3f4.appspot.com',
-  messagingSenderId: '777181518316',
-  appId: '1:777181518316:web:564b09082e224e751348c9',
-  measurementId: 'G-K2881XD9HC',
+  apiKey: 'AIzaSyAS_7GhYzdRu3Cqp0BfV0213yge01kMsiM',
+  authDomain: 'spamdetectormail-16f12.firebaseapp.com',
+  projectId: 'spamdetectormail-16f12',
+  storageBucket: 'spamdetectormail-16f12.appspot.com',
+  messagingSenderId: '339961846529',
+  appId: '1:339961846529:web:ee654f4af77027e1d9d900',
+  measurementId: 'G-8FTZ24Y1VZ',
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

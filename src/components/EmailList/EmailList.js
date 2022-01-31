@@ -128,13 +128,19 @@ function EmailList({
                   time={new Date(data.timestamp?.seconds * 1000).toUTCString()}
                   //   starred={data.starred || false}
                   //   important={data.important || false}
-                  //   read={data.read || false}
+                  read={data.read || false}
                   spam={data.spam || false}
                   //   searchableKeywords={data.searchableKeywords || []}
                   attachments={data.attachments || []}
                 />
               );
             })}
+            <EmailRow
+              title='hello'
+              subject='just testing'
+              description='heloooo'
+              time='4pm'
+            />
           </div>
         )}
         {/* <div style={{ width: '100%', textAlign: 'center' }}>

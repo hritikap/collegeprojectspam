@@ -55,12 +55,12 @@ function Mail() {
     <div className={styles.mail}>
       <div className={styles.mail__tools}>
         <div className={styles.mail__toolsLeft}>
-          {/* <ReactTooltip place="bottom"/>
-                        <p data-tip="Back">
-                            <IconButton onClick={() => history.push("/")}>
-                                <ArrowBackIcon />
-                            </IconButton>
-                        </p> */}
+          <ReactTooltip place='bottom' />
+          <p data-tip='Back'>
+            <IconButton onClick={() => history.push('/')}>
+              <ArrowBackIcon />
+            </IconButton>
+          </p>
           <ReactTooltip place='bottom' />
           <p data-tip='Archive'>
             <IconButton>
@@ -192,19 +192,19 @@ function Mail() {
           <p className={styles.mail__time}>{selectedMail?.time}</p>
         </div>
         <div className={styles.mail__message}>
-          <span
-          // onClick={() => setShowKeywords(!showKeywords)}
-          // style={{
-          //   display: 'flex',
-          //   justifyContent: 'flex-end',
-          //   color: 'blue',
-          //   fontWeight: 'bolder',
-          //  textDecoration: 'underline',
-          //   cursor: 'pointer',
-          // }}
-          >
-            {/* {showKeywords ? 'Hide' : 'Show'} keywords */}
-          </span>
+          {/* <span
+          onClick={() => setShowKeywords(!showKeywords)}
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            color: 'blue',
+            fontWeight: 'bolder',
+           textDecoration: 'underline',
+            cursor: 'pointer',
+          }}
+          > */}
+          {/* {showKeywords ? 'Hide' : 'Show'} keywords */}
+          {/* </span> */}
           <p>{ReactHtmlParser(selectedMail?.description)}</p>
           <br></br>
           {selectedMail &&

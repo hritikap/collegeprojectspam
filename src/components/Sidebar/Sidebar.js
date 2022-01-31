@@ -117,28 +117,28 @@ function Sidebar({ selectedSideBarItem, setSelectedSideBarItem, listLength }) {
       <SidebarOption
         setSelectedSideBarItem={setSelectedSideBarItem}
         index={0}
-        selected={selectedSideBarItem == 0}
+        selected={selectedSideBarItem === 0}
         Icon={InboxIcon}
         title='Inbox'
-        number={selectedSideBarItem == 0 ? listLength : ''}
+        number={selectedSideBarItem === 0 ? listLength : ''}
       />
 
       <SidebarOption
         setSelectedSideBarItem={setSelectedSideBarItem}
         index={4}
-        selected={selectedSideBarItem == 4}
+        selected={selectedSideBarItem === 1}
         Icon={NearMeIcon}
         title='Sent'
-        number={selectedSideBarItem == 4 ? listLength : ''}
+        number={selectedSideBarItem === 1 ? listLength : ''}
       />
 
       <SidebarOption
         setSelectedSideBarItem={setSelectedSideBarItem}
         index={6}
-        selected={selectedSideBarItem == 6}
+        selected={selectedSideBarItem === 2}
         Icon={NewReleasesIcon}
         title='Spam'
-        number={selectedSideBarItem == 6 ? listLength : ''}
+        number={selectedSideBarItem === 2 ? listLength : ''}
       />
 
       {/* <div className={styles.sidebar_footer}>
@@ -173,14 +173,14 @@ function Sidebar({ selectedSideBarItem, setSelectedSideBarItem, listLength }) {
                             />
                             </DialogContent>
                             <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Cancel
-                            </Button>
-                            <Button name="startChatBtn" onClick={sendValue} color="primary">
-                                Start Chat
-                            </Button>
-                            </DialogActions>
-                        </Dialog>
+                        //     <Button onClick={handleClose} color="primary">
+                        //         Cancel
+                        //     </Button>
+                        //     <Button name="startChatBtn" onClick={sendValue} color="primary">
+                        //         Start Chat
+                        //     </Button>
+                        //     </DialogActions>
+                        // </Dialog>
                 </div>
             </div>
             <div style={{overflowY: 'auto', maxHeight:'100px',}}>

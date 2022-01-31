@@ -26,35 +26,35 @@ function SendMail() {
   const [option, setOption] = useState('Primary');
 
   //For file
-  // const [fileUrls, setFileUrls] = useState([]);
-  // function handleFileChange(e) {
-  //   handleUpload(e.target.files[0]);
-  // }
+  const [fileUrls, setFileUrls] = useState([]);
+  function handleFileChange(e) {
+    handleUpload(e.target.files[0]);
+  }
 
-  // function handleUpload(file) {
-  //   console.log('About to upload');
-  //   console.log(file);
-  //   const fileName =
-  //     file.name.replace(' ', '') + '-' + new Date().getTime().toString();
-  //   // const fileName = new Date().getTime().toString()
-  //   const uploadTask = storage.ref(`/images/${fileName}`).put(file);
-  //   uploadTask.on('state_changed', console.log, console.error, () => {
-  //     storage
-  //       .ref('images')
-  //       .child(fileName)
-  //       .getDownloadURL()
-  //       .then((url) => {
-  //         setFileUrls([...fileUrls, url]);
-  //         //   setVal(addData + `<br></br><a href=${url}>attachment:${fileName}</a><br></br>${' '}`)
-  //       });
-  //   });
-  // }
+  function handleUpload(file) {
+    console.log('About to upload');
+    console.log(file);
+    const fileName =
+      file.name.replace(' ', '') + '-' + new Date().getTime().toString();
+    // const fileName = new Date().getTime().toString()
+    const uploadTask = storage.ref(`/images/${fileName}`).put(file);
+    uploadTask.on('state_changed', console.log, console.error, () => {
+      storage
+        .ref('images')
+        .child(fileName)
+        .getDownloadURL()
+        .then((url) => {
+          setFileUrls([...fileUrls, url]);
+          //   setVal(addData + `<br></br><a href=${url}>attachment:${fileName}</a><br></br>${' '}`)
+        });
+    });
+  }
   /////////
 
   const sendEmail = async (msg) => {
     console.log('addData');
     let cleanMsg = addData.replace(/(<([^>]+)>)/gi, '');
-    // cleanMsg = addData.replace(/attachment:(\w+)/g,'')
+    // cleanMsg = addData.replace(/attachment:(\w+)/g, '');
 
     let config = {
       headers: {
@@ -92,13 +92,13 @@ function SendMail() {
   //     searchableKeywords.push(prev);
   //   }
   // top n Keywords from the body
-  let cleanMsg = addData.replace(/(<([^>]+)>)/gi, '');
-  let config = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
-  };
+  // let cleanMsg = addData.replace(/(<([^>]+)>)/gi, '');
+  // let config = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin': '*',
+  //   },
+  // };
 
   //   const resp = await axios.post(
   //     'https://gmail-clone-ml.herokuapp.com/keywords',
@@ -152,7 +152,7 @@ function SendMail() {
         // important: false,
         spam: await sendEmail(formData.message),
         label: option,
-        // attachments: fileUrls,
+        attachments: fileUrls,
       });
       dispatch(closeSendMessage());
     } else {
@@ -178,8 +178,8 @@ function SendMail() {
           <input
             name='to'
             placeholder='To'
-            type='text'
-            // type='email'
+            // type='text'
+            type='email'
             ref={register({ required: true })}
           />
           {errors.to && (
@@ -203,7 +203,11 @@ function SendMail() {
             onChange={handleChange}
           />
           <div>
-            {/* {fileUrls.map(u => <a href={u} style={{marginRight:"2px"}} >{u}</a>)} */}
+            {fileUrls.map((u) => (
+              <a href={u} style={{ marginRight: '2px' }}>
+                {u}
+              </a>
+            ))}
           </div>
 
           {errors.to && (
@@ -217,15 +221,15 @@ function SendMail() {
                 id='demo-simple-select-filled'
                 value={option}
                 name='option'
-                // className="sendMail__sendtype"
+                // className='sendMail__sendtype'
                 style={{ backgroundColor: 'white' }}
                 onChange={handleChangeinType}
               >
-                {/* <MenuItem value='Primary'>Primary</MenuItem> */}
+                <MenuItem value='Primary'>Primary</MenuItem>
                 {/* <MenuItem value='Social'>Social</MenuItem>
                 <MenuItem value='Promotions'>Promotions</MenuItem> */}
               </Select>
-              {/* <div>
+              <div>
                 <input
                   type='file'
                   hidden
@@ -237,10 +241,10 @@ function SendMail() {
                     style={{ color: 'white', cursor: 'pointer' }}
                   />
                 </label>
-              </div> */}
+              </div>
             </div>
 
-            {/* {fileUrls.length > 0 && (
+            {fileUrls.length > 0 && (
               <div
                 style={{
                   display: 'flex',
@@ -267,7 +271,7 @@ function SendMail() {
                   );
                 })}
               </div>
-            )} */}
+            )}
             {/* </div> */}
 
             <Button

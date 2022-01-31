@@ -10,22 +10,20 @@ export const mailSlice = createSlice({
     selectMail: (state, action) => {
       state.selectedMail = action.payload;
     },
-    openSendMessage: state => {
+    openSendMessage: (state) => {
       state.sendMessageIsOpen = true;
     },
-    closeSendMessage: state => {
+    closeSendMessage: (state) => {
       state.sendMessageIsOpen = false;
     },
   },
 });
 
-export const { 
-  selectMail,
-  openSendMessage, 
-  closeSendMessage, 
-} = mailSlice.actions;
+export const { selectMail, openSendMessage, closeSendMessage } =
+  mailSlice.actions;
 
 export const selectOpenMail = (state) => state.mail.selectedMail;
-export const selectSendMessageIsOpen = (state) => state.mail.selectSendMessageIsOpen;
+export const selectSendMessageIsOpen = (state) =>
+  state.mail.selectSendMessageIsOpen;
 
 export default mailSlice.reducer;
