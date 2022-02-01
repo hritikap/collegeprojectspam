@@ -15,8 +15,8 @@ executable_path_1 = "C:/Users/admin/Desktop/testing/driver/chromedriver.exe"
 
 mail_to="mail of recipient"
 
-target_url = "https://express-mailer.netlify.app/"
-# target_url = "http://localhost:3000/"
+# target_url = "https://express-mailer.netlify.app/"
+target_url = "http://localhost:3000/"
 
 class ExpressMailerTest(unittest.TestCase):
 

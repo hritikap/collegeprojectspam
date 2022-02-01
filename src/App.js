@@ -6,27 +6,24 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Mail from './components/Mail/Mail';
 import EmailList from './components/EmailList/EmailList';
 import SendMail from './components/SendMail/SendMail';
-import SendChat from './components/SendChat/SendChat';
 import Login from './components/Login/Login';
 import { selectSendMessageIsOpen } from './features/mail';
-import { selectSendChatIsOpen } from './features/chat';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser, login } from './features/userSlice';
 import { auth, db } from './firebase';
-import Meet from './components/Meet/Meet';
+
 import { selectShowSidebar } from './features/commonSlice';
 import { getQueryStatement, processMailData } from './utilities/utils';
 
 function App() {
   const sendMessageIsOpen = useSelector(selectSendMessageIsOpen);
-  // const sendChatIsOpen = useSelector(selectSendChatIsOpen);
   const user = useSelector(selectUser);
   const showSideBar = useSelector(selectShowSidebar);
   const dispatch = useDispatch();
 
   const [emails, setEmails] = useState([]);
-  const [selectedSideBarItem, setSelectedSideBarItem] = useState(0); // 0-> Inbox, 2-> Starred, etc
-  const [selectedLabelItem, setSelectedLabelItem] = useState(0); // 0-> Primary, 1-> Social, 2->Promotions
+  const [selectedSideBarItem, setSelectedSideBarItem] = useState(0);
+  const [selectedLabelItem, setSelectedLabelItem] = useState(0);
   const [emailReff, setEmailReff] = useState(null);
   const [searchQuery, setSearchQuery] = useState();
 
@@ -100,12 +97,7 @@ function App() {
               <Route path='/mail'>
                 <Mail />
               </Route>
-              <Route path='/meet/single/:userMail'>
-                <Meet />
-              </Route>
-              <Route path='/meet/conference/:userMail'>
-                <Meet />
-              </Route>
+
               <Route path='/'>
                 <EmailList
                   emails={emails}
@@ -117,7 +109,6 @@ function App() {
             </Switch>
           </div>
 
-          {/* {sendChatIsOpen && <SendChat />} */}
           {sendMessageIsOpen && <SendMail />}
         </div>
       )}

@@ -1,9 +1,6 @@
 import { Avatar, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import AppsIcon from '@material-ui/icons/Apps';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+
 import React from 'react';
 import styles from './Header.module.css';
 import { useSelector, useDispatch } from 'react-redux';
@@ -56,29 +53,9 @@ function Header({ searchQuery, setSearchQuery }) {
         />
         <h2> EmailSpamDetector</h2>
       </div>
-      <div className={styles.header__middle}>
-        {/* <SearchIcon />
-        <input
-          placeholder='Search mail'
-          type='text'
-          name='searchMailInput'
-          className={styles.header__inputCaret}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-          }}
-          value={searchQuery}
-        /> */}
-        {/* <ArrowDropDownIcon /> */}
-      </div>
+      <div className={styles.header__middle}></div>
 
       <div className={styles.header__right}>
-        {/* <IconButton>
-          <AppsIcon />
-        </IconButton>
-        <IconButton>
-          <NotificationsIcon />
-        </IconButton> */}
-        {/* <Avatar onClick={signOut} src={user?.photoUrl} /> */}
         <Avatar name='avatarMenu' onClick={handleClick} src={user?.photoUrl} />
         <Menu
           id='simple-menu'

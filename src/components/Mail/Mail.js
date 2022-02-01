@@ -2,11 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from './Mail.module.css';
 import { IconButton } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
-
-import LabelImportantOutlinedIcon from '@material-ui/icons/LabelImportant';
-
 import { useHistory } from 'react-router-dom';
 import { selectOpenMail } from '../../features/mailSlice';
 import { useSelector } from 'react-redux';
@@ -21,14 +17,8 @@ import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
 function Mail() {
   const history = useHistory();
   const selectedMail = useSelector(selectOpenMail);
-  //   const [imp, setImp] = useState(false);
   const [spam, setSpam] = useState(false);
-  //   const [showKeywords, setShowKeywords] = useState(false);
   const componentRef = useRef();
-
-  //   const handlePrint = useReactToPrint({
-  //     content: () => componentRef.current,
-  //   });
 
   useEffect(() => {
     if (!selectedMail) {
@@ -45,7 +35,7 @@ function Mail() {
         { merge: true },
       );
     }
-    // setImp(selectedMail.important || false);
+
     setSpam(selectedMail.spam || false);
   }, []);
 
@@ -61,12 +51,7 @@ function Mail() {
               <ArrowBackIcon />
             </IconButton>
           </p>
-          <ReactTooltip place='bottom' />
-          <p data-tip='Archive'>
-            <IconButton>
-              <MoveToInboxIcon />
-            </IconButton>
-          </p>
+
           <ReactTooltip place='bottom' />
           <p data-tip='Report As Spam'>
             <IconButton
@@ -83,76 +68,7 @@ function Mail() {
               )}
             </IconButton>
           </p>
-          {/* <ReactTooltip place="bottom"/>
-                        <p data-tip="Delete">
-                            <IconButton onClick={(e) => {
-                                e.stopPropagation()
-                                deleteMail(selectedMail.id).then(result => {
-                                    console.log(result)
-                                    if(result){
-                                        history.push('/')
-                                    }
-                                    else{
-                                        alert('Action Denied')
-                                    }
-                                })
-                            }}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </p> */}
-          {/* <ReactTooltip place="bottom"/>
-                        <p data-tip="Mark as Unread">
-                            <IconButton>
-                                <EmailIcon />
-                            </IconButton>
-                        </p>
-                    <ReactTooltip place="bottom"/>
-                        <p data-tip="Snooze">
-                            <IconButton>
-                                <WatchLaterIcon />
-                            </IconButton>
-                        </p> */}
-          {/* <ReactTooltip place="bottom"/>
-                        <p data-tip="Mark as Read">
-                            <IconButton>
-                                <CheckCircleIcon />
-                            </IconButton>
-                        </p> */}
-          {/* <ReactTooltip place="bottom"/>
-                        <p data-tip="Mark as Important">
-                            <IconButton onClick={async (e) => {
-                                e.stopPropagation();
-                                const result = await toggleImportant(selectedMail.id)
-                                if(result) setImp(!imp)
-                                }
-                            }>
-                                {imp ? <LabelImportantOutlinedIcon style={{fill: "orange"}}/> : <LabelImportantOutlinedIcon /> }
-                            </IconButton>
-                        </p>
-                    <ReactTooltip place="bottom"/>
-                        <p data-tip="More">
-                            <IconButton>
-                                <MoreVertIcon />
-                            </IconButton>
-                        </p> */}
         </div>
-
-        {/* <div className={styles.mail__toolsRight}>
-                <div className={styles.mail__toolsRight}>
-                    <ReactTooltip place="bottom"/>
-                        <span data-tip="Print Mail"> 
-                            <IconButton onClick={handlePrint}>
-                                <PrintIcon />
-                            </IconButton>
-                        </span>
-                    <ReactTooltip place="bottom"/>
-                        <span data-tip="Pop out">     
-                            <IconButton>
-                                <ExitToAppIcon />
-                            </IconButton>
-                        </span>
-                </div>
-                </div> */}
       </div>
 
       <div
@@ -162,7 +78,7 @@ function Mail() {
       >
         <div style={{ position: 'absolute', top: '0px', right: '20px' }}>
           {selectedMail && selectedMail.read
-            ? selectedMail.from == auth.currentUser.email && (
+            ? selectedMail.from === auth.currentUser.email && (
                 <div style={{ padding: '10px' }}>
                   <ReactTooltip place='left' />
                   <span data-tip='Read by recipient'>
@@ -170,7 +86,7 @@ function Mail() {
                   </span>
                 </div>
               )
-            : selectedMail.from == auth.currentUser.email && (
+            : selectedMail.from === auth.currentUser.email && (
                 <div style={{ padding: '10px' }}>
                   {/* Unread by recipient */}
                   <ReactTooltip place='left' />
@@ -183,28 +99,11 @@ function Mail() {
 
         <div className={styles.mail__bodyHeader}>
           <h2>{selectedMail?.subject}</h2>
-          {/* {imp ? (
-            <LabelImportantOutlinedIcon style={{ fill: 'orange' }} />
-          ) : (
-            <LabelImportantOutlinedIcon />
-          )} */}
+
           <p>{selectedMail?.title}</p>
           <p className={styles.mail__time}>{selectedMail?.time}</p>
         </div>
         <div className={styles.mail__message}>
-          {/* <span
-          onClick={() => setShowKeywords(!showKeywords)}
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            color: 'blue',
-            fontWeight: 'bolder',
-           textDecoration: 'underline',
-            cursor: 'pointer',
-          }}
-          > */}
-          {/* {showKeywords ? 'Hide' : 'Show'} keywords */}
-          {/* </span> */}
           <p>{ReactHtmlParser(selectedMail?.description)}</p>
           <br></br>
           {selectedMail &&
@@ -226,34 +125,6 @@ function Mail() {
             )}
         </div>
         <br></br>
-
-        {/* {showKeywords && (
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              listStyle: 'none',
-              padding: '5px',
-              margin: 0,
-              position: 'fixed',
-              bottom: '3vh',
-              alignItems: 'center',
-              maxHeight: '10vh',
-              overflow: 'auto',
-            }}
-          >
-            {selectedMail.searchableKeywords.map((keyword, index) => {
-              return (
-                <li key={index}>
-                  <Chip
-                    label={keyword}
-                    style={{ marginBottom: '5px', marginRight: '3px' }}
-                  />
-                </li>
-              );
-            })}
-          </div>
-        )} */}
       </div>
     </div>
   );

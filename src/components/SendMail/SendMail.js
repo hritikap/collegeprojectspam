@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styles from './SendMail.module.css';
 import CloseIcon from '@material-ui/icons/Close';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import { Button, Chip } from '@material-ui/core';
+
+import { Button } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { closeSendMessage } from '../../features/mail';
-import { auth, db, storage } from '../../firebase';
+import { auth, db } from '../../firebase';
 import firebase from 'firebase';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -16,45 +16,15 @@ import { encrypt } from '../../utilities/crypt';
 import { generateRoomName } from '../../utilities/common';
 import axios from 'axios';
 
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-
 function SendMail() {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const dispatch = useDispatch();
   const [addData, setVal] = useState('');
   const [option, setOption] = useState('Primary');
 
-  //For file
-  const [fileUrls, setFileUrls] = useState([]);
-  function handleFileChange(e) {
-    handleUpload(e.target.files[0]);
-  }
-
-  function handleUpload(file) {
-    console.log('About to upload');
-    console.log(file);
-    const fileName =
-      file.name.replace(' ', '') + '-' + new Date().getTime().toString();
-    // const fileName = new Date().getTime().toString()
-    const uploadTask = storage.ref(`/images/${fileName}`).put(file);
-    uploadTask.on('state_changed', console.log, console.error, () => {
-      storage
-        .ref('images')
-        .child(fileName)
-        .getDownloadURL()
-        .then((url) => {
-          setFileUrls([...fileUrls, url]);
-          //   setVal(addData + `<br></br><a href=${url}>attachment:${fileName}</a><br></br>${' '}`)
-        });
-    });
-  }
-  /////////
-
   const sendEmail = async (msg) => {
     console.log('addData');
     let cleanMsg = addData.replace(/(<([^>]+)>)/gi, '');
-    // cleanMsg = addData.replace(/attachment:(\w+)/g, '');
 
     let config = {
       headers: {
@@ -81,35 +51,6 @@ function SendMail() {
     console.log(`Option selected:`, option);
   };
 
-  // const generateKeywords = async (formData) => {
-  //   let searchableKeywords = [
-  //     auth.currentUser.email,
-  //     ...formData.subject.split(' '),
-  //   ];
-  //   let prev = '';
-  //   for (var i = 0; i < formData.subject.length; i++) {
-  //     prev = prev + formData.subject.charAt(i);
-  //     searchableKeywords.push(prev);
-  //   }
-  // top n Keywords from the body
-  // let cleanMsg = addData.replace(/(<([^>]+)>)/gi, '');
-  // let config = {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Access-Control-Allow-Origin': '*',
-  //   },
-  // };
-
-  //   const resp = await axios.post(
-  //     'https://gmail-clone-ml.herokuapp.com/keywords',
-  //     { message: cleanMsg, n: 5 },
-  //     config,
-  //   );
-  //   searchableKeywords = [...searchableKeywords, ...resp.data['keywords']];
-  //   console.log(searchableKeywords);
-  //   return searchableKeywords;
-  // };
-
   const checkIfEmailExists = async (email) => {
     const snapshot = await db
       .collection('users')
@@ -118,7 +59,7 @@ function SendMail() {
       .get();
     console.log(snapshot.empty);
 
-    if (snapshot.empty || email == auth.currentUser.email) {
+    if (snapshot.empty || email === auth.currentUser.email) {
       return false;
     }
     return true;
@@ -126,12 +67,10 @@ function SendMail() {
 
   const onSubmit = async (formData) => {
     // check here if email exist (for now just setting it to true)
-    if (addData == '') {
+    if (addData === '') {
       return;
     }
     const emailExists = await checkIfEmailExists(formData.to);
-
-    // console.log(await generateKeywords(formData))
 
     if (emailExists) {
       db.collection('emails').add({
@@ -146,13 +85,11 @@ function SendMail() {
           generateRoomName(auth.currentUser.email, formData.to),
         ),
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        // searchableKeywords: await generateKeywords(formData),
+
         read: false,
-        // starred: false,
-        // important: false,
+
         spam: await sendEmail(formData.message),
         label: option,
-        attachments: fileUrls,
       });
       dispatch(closeSendMessage());
     } else {
@@ -202,20 +139,13 @@ function SendMail() {
             data={addData}
             onChange={handleChange}
           />
-          <div>
-            {fileUrls.map((u) => (
-              <a href={u} style={{ marginRight: '2px' }}>
-                {u}
-              </a>
-            ))}
-          </div>
 
           {errors.to && (
             <p className={styles.sendMail__error}>Message is required</p>
           )}
 
           <div className={styles.sendMail__buttons}>
-            <div className={styles.sendMail__buttons__left}>
+            {/* <div className={styles.sendMail__buttons__left}>
               <Select
                 labelId='demo-simple-select-filled-label'
                 id='demo-simple-select-filled'
@@ -225,54 +155,9 @@ function SendMail() {
                 style={{ backgroundColor: 'white' }}
                 onChange={handleChangeinType}
               >
-                <MenuItem value='Primary'>Primary</MenuItem>
-                {/* <MenuItem value='Social'>Social</MenuItem>
-                <MenuItem value='Promotions'>Promotions</MenuItem> */}
+                <MenuItem value='Primary'></MenuItem>
               </Select>
-              <div>
-                <input
-                  type='file'
-                  hidden
-                  id='file-upload'
-                  onChange={handleFileChange}
-                />
-                <label htmlFor='file-upload'>
-                  <AttachFileIcon
-                    style={{ color: 'white', cursor: 'pointer' }}
-                  />
-                </label>
-              </div>
-            </div>
-
-            {fileUrls.length > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  listStyle: 'none',
-                  flex: 1,
-                  height: '30px',
-                  overflow: 'auto',
-                }}
-              >
-                {fileUrls.map((k, index) => {
-                  return (
-                    <li key={index}>
-                      <Chip
-                        onClick={() => window.open(k)}
-                        label={k}
-                        style={{
-                          marginBottom: '2px',
-                          marginRight: '3px',
-                          maxWidth: '100px',
-                        }}
-                      />
-                    </li>
-                  );
-                })}
-              </div>
-            )}
-            {/* </div> */}
+            </div> */}
 
             <Button
               className='sendMail__send'
