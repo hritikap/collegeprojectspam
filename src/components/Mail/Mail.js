@@ -106,23 +106,6 @@ function Mail() {
         <div className={styles.mail__message}>
           <p>{ReactHtmlParser(selectedMail?.description)}</p>
           <br></br>
-          {selectedMail &&
-            selectedMail.attachments &&
-            selectedMail.attachments.length > 0 && (
-              <div>
-                <h3>Attachments</h3>
-                {selectedMail.attachments.map((attach) => {
-                  return (
-                    <div>
-                      <br></br>
-                      <a target='_blank' href={attach}>
-                        {attach}
-                      </a>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
         </div>
         <br></br>
       </div>

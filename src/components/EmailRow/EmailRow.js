@@ -15,7 +15,6 @@ function EmailRow({
   to,
   from,
   spam,
-  attachments,
 }) {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -32,7 +31,6 @@ function EmailRow({
         to,
         from,
         spam,
-        attachments,
       }),
     );
     history.push('/mail');

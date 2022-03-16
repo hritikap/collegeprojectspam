@@ -20,9 +20,9 @@ function SendMail() {
   const { register, handleSubmit, errors } = useForm();
   const dispatch = useDispatch();
   const [addData, setVal] = useState('');
-  const [option, setOption] = useState('Primary');
+  const [option] = useState('Primary');
 
-  const sendEmail = async (msg) => {
+  const sendEmail = async () => {
     console.log('addData');
     let cleanMsg = addData.replace(/(<([^>]+)>)/gi, '');
 
@@ -34,7 +34,7 @@ function SendMail() {
     };
 
     const resp = await axios.post(
-      'https://gmail-clone-ml.herokuapp.com/predict',
+      'http://127.0.0.1:5000/predict',
       { message: cleanMsg },
       config,
     );
@@ -46,10 +46,10 @@ function SendMail() {
     setVal(data);
   };
 
-  const handleChangeinType = (event) => {
-    setOption(event.target.value);
-    console.log(`Option selected:`, option);
-  };
+  // const handleChangeinType = (event) => {
+  //   setOption(event.target.value);
+  //   console.log(`Option selected:`, option);
+  // };
 
   const checkIfEmailExists = async (email) => {
     const snapshot = await db
@@ -92,10 +92,10 @@ function SendMail() {
         label: option,
       });
       dispatch(closeSendMessage());
+      alert('Mail sent successfully to  ' + formData.to);
     } else {
       console.log(formData.to + " doesn't exist.");
       toast.error('Cannot send mail to ' + formData.to);
-      // toast.success("Mail sent successfully.")
     }
   };
 
@@ -145,20 +145,6 @@ function SendMail() {
           )}
 
           <div className={styles.sendMail__buttons}>
-            {/* <div className={styles.sendMail__buttons__left}>
-              <Select
-                labelId='demo-simple-select-filled-label'
-                id='demo-simple-select-filled'
-                value={option}
-                name='option'
-                // className='sendMail__sendtype'
-                style={{ backgroundColor: 'white' }}
-                onChange={handleChangeinType}
-              >
-                <MenuItem value='Primary'></MenuItem>
-              </Select>
-            </div> */}
-
             <Button
               className='sendMail__send'
               variant='contained'

@@ -1,6 +1,5 @@
 import firebase from 'firebase';
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAS_7GhYzdRu3Cqp0BfV0213yge01kMsiM',
   authDomain: 'spamdetectormail-16f12.firebaseapp.com',
@@ -14,7 +13,7 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
-const storage = firebase.storage();
+// const storage = firebase.storage();
 const provider = new firebase.auth.GoogleAuthProvider();
 
-export { db, auth, provider, storage };
+export { db, auth, provider };

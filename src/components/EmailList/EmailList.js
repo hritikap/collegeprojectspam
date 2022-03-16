@@ -61,7 +61,6 @@ function EmailList({
                   time={new Date(data.timestamp?.seconds * 1000).toUTCString()}
                   read={data.read || false}
                   spam={data.spam || false}
-                  attachments={data.attachments || []}
                 />
               );
             })}
