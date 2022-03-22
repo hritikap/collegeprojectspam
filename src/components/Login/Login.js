@@ -6,6 +6,8 @@ import { login } from '../../features/userSlice';
 import { useDispatch } from 'react-redux';
 import logo from './spamlogo.png';
 function Login() {
+  //useDispatch is a function that we import from react-redux library and assign it to a variable. And with this, we are able to dispatch any action to the store by simply adding an action as an argument to the new variable like the code
+
   const dispatch = useDispatch();
 
   const saveUserToDb = async (user) => {
@@ -25,7 +27,7 @@ function Login() {
 
   const signIn = () => {
     auth
-      .signInWithPopup(provider)
+      .signInWithPopup(provider) //signinwithpopup is function provided by firebase
       .then(async ({ user }) => {
         await saveUserToDb(user);
         dispatch(

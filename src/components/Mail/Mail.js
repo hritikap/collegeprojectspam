@@ -15,8 +15,10 @@ import ReactTooltip from 'react-tooltip';
 import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
 
 function Mail() {
-  const history = useHistory();
-  const selectedMail = useSelector(selectOpenMail);
+  const history = useHistory(); //The useHistory hook allows us to access React Router's history object.Through the history object, we can access and manipulate the current state of the browser history.
+
+  const selectedMail = useSelector(selectOpenMail); //useSelector hook is used to get the state from the redux store.useSelector is a function that takes the current state as an argument and returns whatever data you want from it.
+
   const [spam, setSpam] = useState(false);
   const componentRef = useRef();
 

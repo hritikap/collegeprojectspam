@@ -72,6 +72,11 @@ function SendMail() {
     }
     const emailExists = await checkIfEmailExists(formData.to);
 
+    // we can Compose and send an email based on the contents of a document written to a specified Cloud Firestore collection.
+
+    //when we authenticate a user using fireabase google authentication the firebase provides a built in email system and a goofle smtp server.
+
+    //when we send an email in the firestore database it stores the sender,recever,meesages,spamlabel and the time of thee message sent
     if (emailExists) {
       db.collection('emails').add({
         to: formData.to,
@@ -91,6 +96,7 @@ function SendMail() {
         spam: await sendEmail(formData.message),
         label: option,
       });
+      //  useDispatch hook is used to dispatch an action
       dispatch(closeSendMessage());
       alert('Mail sent successfully to  ' + formData.to);
     } else {
@@ -101,6 +107,7 @@ function SendMail() {
 
   return (
     <>
+      {/* toast container to notify whether the mail has been sent or not */}
       <ToastContainer />
       <div className={styles.sendMail}>
         <div className={styles.sendMail__header}>
@@ -110,6 +117,8 @@ function SendMail() {
             onClick={() => dispatch(closeSendMessage())}
           />
         </div>
+
+        {/* handlesubmit is the part of react hook form  */}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <input

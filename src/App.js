@@ -22,8 +22,8 @@ function App() {
   const dispatch = useDispatch();
 
   const [emails, setEmails] = useState([]);
-  const [selectedSideBarItem, setSelectedSideBarItem] = useState(0);
-  const [selectedLabelItem, setSelectedLabelItem] = useState(0);
+  const [selectedSideBarItem, setSelectedSideBarItem] = useState(0); //0->inbox,1->sent,2->spam
+  const [selectedLabelItem, setSelectedLabelItem] = useState(0); // 0->primary
   const [emailReff, setEmailReff] = useState(null);
   const [searchQuery, setSearchQuery] = useState();
 
@@ -32,16 +32,18 @@ function App() {
     setEmailReff(emailRef);
   };
 
+  //  useeffeect  is a react hook  which tell React that your component needs to do something after render.
   useEffect(() => {
     if (searchQuery && searchQuery.length > 0) {
       const m = db
         .collection('emails')
         .where('to', '==', auth.currentUser.email)
-        .where('searchableKeywords', 'array-contains', searchQuery)
         .orderBy('timestamp', 'desc')
         .onSnapshot((snapshot) => {
           setEmails(snapshot.docs.map((doc) => processMailData(doc)));
         });
+
+      // snapshot is the copy of the data a certain location that means uusng the abve code the data oor message that is composed is copied to the inbox of the receiver.
 
       return () => {
         console.log('search clean up');
@@ -61,6 +63,7 @@ function App() {
     }
   }, [emailReff, searchQuery]);
 
+  // to handle the login page using google authentication
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -92,6 +95,8 @@ function App() {
                 setSelectedSideBarItem={setSelectedSideBarItem}
               />
             )}
+
+            {/* The switch component looks through all of its child routes and it displays the first one whose path matches the current URL */}
 
             <Switch>
               <Route path='/mail'>

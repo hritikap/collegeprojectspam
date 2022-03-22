@@ -37,6 +37,7 @@ export function getQueryStatement(selectedSideBarItem, selectedLabelItem) {
   return emailRef;
 }
 
+//the  message and subject that is stored in the firebase is encrypted so we here we decrypt the meaasge that is to be displayed in inbox
 export function processMailData(doc) {
   return {
     id: doc.id,
